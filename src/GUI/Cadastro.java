@@ -64,7 +64,7 @@ public class Cadastro extends JFrame {
 		panelCadastro.setBorder(new EmptyBorder(50, 100, 50, 100));
 		panelCadastro.setBackground(Color.WHITE);
 		getContentPane().add(panelCadastro, BorderLayout.CENTER);
-		panelCadastro.setLayout(new GridLayout(10, 1, 1, 1));
+		panelCadastro.setLayout(new GridLayout(12, 1, 1, 1));
 		
 		JLabel lblNewLabel = new JLabel("Cadastro");
 		lblNewLabel.setFont(new Font("Segoe UI Black", Font.PLAIN, 22));
@@ -87,11 +87,22 @@ public class Cadastro extends JFrame {
 		lblNewLabel_1_1.setFont(new Font("Arial", Font.BOLD, 16));
 		panelCadastro.add(lblNewLabel_1_1);
 		
-		cpfField = new JFormattedTextField(new MaskFormatter("#########/##"));
+		cpfField = new JFormattedTextField(new MaskFormatter("###.###.###/##"));
 		cpfField.setHorizontalAlignment(SwingConstants.LEFT);
 		cpfField.setFont(new Font("Arial", Font.PLAIN, 12));
 		cpfField.setColumns(1);
 		panelCadastro.add(cpfField);
+		
+		JLabel lblNewLabel_1_3_1 = new JLabel("Data de nascimento");
+		lblNewLabel_1_3_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_1_3_1.setFont(new Font("Arial", Font.BOLD, 16));
+		panelCadastro.add(lblNewLabel_1_3_1);
+		
+		JFormattedTextField dataNascField = new JFormattedTextField(new MaskFormatter("##/##/####"));
+		dataNascField.setHorizontalAlignment(SwingConstants.LEFT);
+		dataNascField.setFont(new Font("Arial", Font.PLAIN, 12));
+		dataNascField.setColumns(1);
+		panelCadastro.add(dataNascField);
 		
 		JLabel lblNewLabel_1_2 = new JLabel("Altura");
 		lblNewLabel_1_2.setHorizontalAlignment(SwingConstants.LEFT);
