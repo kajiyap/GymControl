@@ -26,6 +26,8 @@ import java.awt.SystemColor;
 import java.text.ParseException;
 
 import javax.swing.JFormattedTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Cadastro extends JFrame {
 
@@ -64,7 +66,7 @@ public class Cadastro extends JFrame {
 		panelCadastro.setBorder(new EmptyBorder(50, 100, 50, 100));
 		panelCadastro.setBackground(Color.WHITE);
 		getContentPane().add(panelCadastro, BorderLayout.CENTER);
-		panelCadastro.setLayout(new GridLayout(12, 1, 1, 1));
+		panelCadastro.setLayout(new GridLayout(13, 1, 1, 1));
 		
 		JLabel lblNewLabel = new JLabel("Cadastro");
 		lblNewLabel.setFont(new Font("Segoe UI Black", Font.PLAIN, 22));
@@ -126,9 +128,19 @@ public class Cadastro extends JFrame {
 		pesoField.setColumns(1);
 		panelCadastro.add(pesoField);
 		
-		JButton enviarBtn = new JButton("Enviar");
-		enviarBtn.setBackground(SystemColor.control);
-		panelCadastro.add(enviarBtn);
+		JButton enviarBtn_1 = new JButton("Enviar");
+		enviarBtn_1.setBackground(SystemColor.control);
+		panelCadastro.add(enviarBtn_1);
+		
+		JButton btnNewButton = new JButton("Voltar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Inicio ini = new Inicio();
+				ini.setVisible(true);
+				setVisible(false);
+			}
+		});
+		panelCadastro.add(btnNewButton);
 
 	}
 }
