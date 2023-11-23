@@ -6,9 +6,9 @@ import java.sql.SQLException;
 
 
 public class ConnectionFactory {
-	public Connection getConnection() {
+	public static Connection getConnection() {
 		try {
-			return DriverManager.getConnection("jdbc:mysql://localhost/chatbot", "root", "fatec");
+			return DriverManager.getConnection("jdbc:mysql://localhost/gymcontrol", "root", "fatec");
 		}
 		catch(SQLException excecao) {
 			throw new RuntimeException(excecao);

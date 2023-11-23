@@ -1,21 +1,29 @@
 package Models;
 
 public class Aluno {
+	private int id;
 	private String nome;
 	private String cpf;
 	private String dataNasc;
-	private double peso;
 	private double altura;
 	
 	
+	
 	public Aluno(String nome, String cpf, String dataNasc, double peso, double altura) {
-		super();
 		this.nome = nome;
 		this.cpf = cpf;
 		this.dataNasc = dataNasc;
-		this.peso = peso;
 		this.altura = altura;
 	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 
 
 	public String getNome() {
@@ -45,16 +53,6 @@ public class Aluno {
 
 	public void setDataNasc(String dataNasc) {
 		this.dataNasc = dataNasc;
-	}
-
-
-	public double getPeso() {
-		return peso;
-	}
-
-
-	public void setPeso(double peso) {
-		this.peso = peso;
 	}
 
 
