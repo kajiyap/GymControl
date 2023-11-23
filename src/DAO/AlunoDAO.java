@@ -25,7 +25,13 @@ public class AlunoDAO {
 			ResultSet rs = ps.executeQuery();
 			
 			while (rs.next()) {
-				Aluno aluno = new Aluno( rs.getString("nome"), rs.getString("cpf"),  rs.getString("dataNasc"), rs.getDouble("peso"), rs.getDouble("altura"));
+				Aluno aluno = new Aluno();
+				aluno.setId(rs.getInt("id"));
+				aluno.setNome(rs.getString("nome"));
+				aluno.setCpf(rs.getString("cpf"));
+				aluno.setDataNasc(rs.getString("dataNasc"));
+				aluno.setAltura(rs.getDouble("altura"));
+				
 				alunos.add(aluno);
 			}
 			
@@ -56,6 +62,23 @@ public class AlunoDAO {
 			
 			return nomes;
 			
+					
+		}catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public void insert(Aluno aluno) {
+		try {
+			PreparedStatement ps = this.conexao.prepareStatement("INSERT INTO alunos VALUES (?, ?, ?, ?, ?)");
+			
+			ps.setString(1, null);
+			ps.setString(2, aluno.getNome());
+			ps.setString(3, aluno.getCpf());
+			ps.setString(4, aluno.getDataNasc());
+			ps.setDouble(5, aluno.getAltura());
+			ps.execute();
+			ps.close();
 					
 		}catch (SQLException e) {
 			throw new RuntimeException(e);

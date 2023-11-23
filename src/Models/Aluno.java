@@ -16,6 +16,10 @@ public class Aluno {
 		this.altura = altura;
 	}
 	
+	public Aluno() {
+		
+	}
+	
 	public int getId() {
 		return id;
 	}
