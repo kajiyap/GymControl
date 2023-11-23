@@ -5,6 +5,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import ConnectionFactory.ConnectionFactory;
+import DAO.AlunoDAO;
+import Models.Aluno;
+
 import java.awt.GridLayout;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -13,7 +18,11 @@ import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class Consulta extends JFrame {
 
@@ -54,8 +63,19 @@ public class Consulta extends JFrame {
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		contentPane.add(lblNewLabel);
 		
-		JComboBox comboBox = new JComboBox();
-		contentPane.add(comboBox);
+		AlunoDAO dao = new AlunoDAO(ConnectionFactory.getConnection());
+		List<String> nomes = dao.getNomes();
+		
+		JComboBox nomeAlunos = new JComboBox(nomes.toArray());
+		nomeAlunos.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == ItemEvent.SELECTED) {
+					
+					System.out.println(nomeAlunos.getSelectedItem());
+				};
+			}
+		});
+		contentPane.add(nomeAlunos);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
 		contentPane.add(lblNewLabel_1);

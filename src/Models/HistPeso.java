@@ -6,7 +6,6 @@ public class HistPeso {
 	private String data;
 	
 	public HistPeso(double peso, double altura, String data) {
-		super();
 		this.peso = peso;
 		this.altura = altura;
 		this.data = data;

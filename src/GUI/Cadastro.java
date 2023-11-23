@@ -22,12 +22,18 @@ import java.awt.BorderLayout;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
+import ConnectionFactory.ConnectionFactory;
+import DAO.AlunoDAO;
+import Models.Aluno;
+
 import java.awt.SystemColor;
 import java.text.ParseException;
 
 import javax.swing.JFormattedTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import javax.swing.JOptionPane;
 
 public class Cadastro extends JFrame {
 
@@ -129,6 +135,29 @@ public class Cadastro extends JFrame {
 		panelCadastro.add(pesoField);
 		
 		JButton enviarBtn_1 = new JButton("Enviar");
+		enviarBtn_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AlunoDAO dao = new AlunoDAO(ConnectionFactory.getConnection());
+				
+				Aluno aluno = new Aluno();
+				aluno.setNome(nomeField.getText());
+				aluno.setCpf(cpfField.getText());
+				aluno.setDataNasc(dataNascField.getText());
+				aluno.setAltura(Double.parseDouble(alturaField.getText()));
+				
+				try {
+					dao.insert(aluno);
+					JOptionPane.showMessageDialog(null, "Aluno cadastrado", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+				}catch(RuntimeException error) {
+					if(error.getMessage().contains("Duplicate entry")) {
+						JOptionPane.showMessageDialog(null, "Esse nome já está sendo utilizado, por favor escolha outro", "Nome inválido", JOptionPane.ERROR_MESSAGE);
+					}else {
+						System.out.println(error);
+					}
+				}
+				
+			}
+		});
 		enviarBtn_1.setBackground(SystemColor.control);
 		panelCadastro.add(enviarBtn_1);
 		
