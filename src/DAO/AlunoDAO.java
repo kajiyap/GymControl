@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +45,63 @@ public class AlunoDAO {
 		}
 	}
 	
+	
+	public Aluno getById(int id) {
+		try {
+			PreparedStatement ps = this.conexao.prepareStatement("SELECT * FROM alunos WHERE id=?");
+			ps.setInt(1, id);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			Aluno aluno = new Aluno();
+			
+			while (rs.next()) {
+				aluno.setId(rs.getInt("id"));
+				aluno.setNome(rs.getString("nome"));
+				aluno.setCpf(rs.getString("cpf"));
+				aluno.setDataNasc(rs.getString("dataNasc"));
+				aluno.setAltura(rs.getDouble("altura"));
+			}
+			
+			ps.close();
+			
+			return aluno;
+			
+					
+		}catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	
+	public Aluno getByNome(String nome) {
+		try {
+			PreparedStatement ps = this.conexao.prepareStatement("SELECT * FROM alunos WHERE nome=?");
+			ps.setString(1, nome);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			Aluno aluno = new Aluno();
+			
+			while (rs.next()) {
+				aluno.setId(rs.getInt("id"));
+				aluno.setNome(rs.getString("nome"));
+				aluno.setCpf(rs.getString("cpf"));
+				aluno.setDataNasc(rs.getString("dataNasc"));
+				aluno.setAltura(rs.getDouble("altura"));
+			}
+			
+			ps.close();
+			
+			return aluno;
+			
+					
+		}catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	
 	public List<String> getNomes(){
 		List<String> nomes = new ArrayList<String>();
 		
@@ -68,6 +124,7 @@ public class AlunoDAO {
 			throw new RuntimeException(e);
 		}
 	}
+	
 	
 	public void insert(Aluno aluno) {
 		try {

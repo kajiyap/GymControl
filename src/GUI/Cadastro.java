@@ -41,7 +41,6 @@ public class Cadastro extends JFrame {
 	private JTextField nomeField;
 	private JFormattedTextField cpfField;
 	private JTextField alturaField;
-	private JFormattedTextField pesoField;
 
 	/**
 	 * Launch the application.
@@ -122,17 +121,6 @@ public class Cadastro extends JFrame {
 		alturaField.setFont(new Font("Arial", Font.PLAIN, 12));
 		alturaField.setColumns(1);
 		panelCadastro.add(alturaField);
-		
-		JLabel lblNewLabel_1_3 = new JLabel("Peso");
-		lblNewLabel_1_3.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel_1_3.setFont(new Font("Arial", Font.BOLD, 16));
-		panelCadastro.add(lblNewLabel_1_3);
-		
-		pesoField = new JFormattedTextField();
-		pesoField.setHorizontalAlignment(SwingConstants.LEFT);
-		pesoField.setFont(new Font("Arial", Font.PLAIN, 12));
-		pesoField.setColumns(1);
-		panelCadastro.add(pesoField);
 		
 		JButton enviarBtn_1 = new JButton("Enviar");
 		enviarBtn_1.addActionListener(new ActionListener() {

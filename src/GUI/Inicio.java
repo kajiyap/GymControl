@@ -13,6 +13,7 @@ import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class Inicio extends JFrame {
 
@@ -42,6 +43,7 @@ public class Inicio extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(50, 30, 25, 30));
 
 		setContentPane(contentPane);
@@ -49,7 +51,7 @@ public class Inicio extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("Bem Vindo!");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		lblNewLabel.setFont(new Font("Segoe UI Black", Font.PLAIN, 22));
 		contentPane.add(lblNewLabel);
 		
 		JButton btnNewButton = new JButton("Cadastrar novo aluno");
