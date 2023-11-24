@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import ConnectionFactory.ConnectionFactory;
+import DAO.AlunoDAO;
 import DAO.HistPesoDAO;
 import Models.Aluno;
 import Models.HistPeso;
@@ -91,7 +92,7 @@ public class Pesagem extends JFrame {
 		contentPane.setBorder(new EmptyBorder(25, 25, 25, 25));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new GridLayout(5, 1, 0, 0));
+		contentPane.setLayout(new GridLayout(7, 1, 0, 0));
 		
 		JLabel lblNewLabel = new JLabel("Histórico de Peso");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -119,27 +120,39 @@ public class Pesagem extends JFrame {
 		});
 		contentPane.add(histData);
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
-		contentPane.add(panel);
-		panel.setLayout(new GridLayout(0, 3, 0, 0));
+		JPanel pesoPanel = new JPanel();
+		pesoPanel.setBackground(Color.WHITE);
+		contentPane.add(pesoPanel);
+		pesoPanel.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		pesoLabel = new JLabel("Peso: kg");
 		pesoLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		pesoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(pesoLabel);
+		pesoPanel.add(pesoLabel);
 		
 		imcLabel = new JLabel("IMC: ");
 		imcLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		imcLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(imcLabel);
+		pesoPanel.add(imcLabel);
 		
-		JPanel panel_1 = new JPanel();
-		panel.add(panel_1);
-		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
+		JPanel buttonPanel = new JPanel();
+		contentPane.add(buttonPanel);
+		buttonPanel.setLayout(new GridLayout(1, 1, 0, 0));
 		
-		JButton btnNewButton = new JButton("Alterar");
-		panel_1.add(btnNewButton);
+		JButton registroBtn = new JButton("Resgistrar peso");
+		registroBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Peso pes = new Peso();
+				
+				pes.setAluno(aluno);
+				pes.setVisible(true);
+				setVisible(false);
+			}
+		});
+		buttonPanel.add(registroBtn);
+		
+		JButton alterarBtn = new JButton("Alterar");
+		buttonPanel.add(alterarBtn);
 		
 		JButton excluirBtn = new JButton("Excluir");
 		excluirBtn.addActionListener(new ActionListener() {
@@ -171,9 +184,13 @@ public class Pesagem extends JFrame {
 				}
 			}
 		});
-		panel_1.add(excluirBtn);
+		buttonPanel.add(excluirBtn);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		contentPane.add(lblNewLabel_1);
 		
 		JButton voltarBtn = new JButton("Voltar");
+		contentPane.add(voltarBtn);
 		voltarBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Consulta con = new Consulta();
@@ -182,7 +199,6 @@ public class Pesagem extends JFrame {
 				setVisible(false);
 			}
 		});
-		contentPane.add(voltarBtn);
 	}
 
 }

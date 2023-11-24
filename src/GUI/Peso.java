@@ -110,8 +110,10 @@ public class Peso extends JFrame {
 		JButton voltarBtn = new JButton("Voltar");
 		voltarBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Consulta con = new Consulta();
-				con.setVisible(true);
+				Pesagem pes = new Pesagem();
+				
+				pes.setAluno(aluno);
+				pes.setVisible(true);
 				setVisible(false);
 			}
 		});
