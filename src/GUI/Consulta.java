@@ -61,7 +61,7 @@ public class Consulta extends JFrame {
 		contentPane.setBorder(new EmptyBorder(55, 35, 50, 35));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new GridLayout(8, 1, 2, 2));
+		contentPane.setLayout(new GridLayout(9, 1, 2, 2));
 		
 		JLabel lblNewLabel = new JLabel("Consulta de alunos");
 		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
@@ -149,6 +149,20 @@ public class Consulta extends JFrame {
 			}
 		});
 		contentPane.add(voltarBtn);
+		
+		JButton btnNewButton_2 = new JButton("Histórico de peso/IMC");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Pesagem pes = new Pesagem();
+				pes.setVisible(true);
+				setVisible(false);
+				AlunoDAO dao = new AlunoDAO(ConnectionFactory.getConnection());
+				Aluno aluno = dao.getByNome(nomeAlunos.getSelectedItem().toString());
+				
+				pes.setIdAluno(aluno.getId());
+			}
+		});
+		contentPane.add(btnNewButton_2);
 	}
 
 }

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import Models.Aluno;
 import Models.HistPeso;
 
 public class HistPesoDAO {
@@ -42,7 +43,55 @@ public class HistPesoDAO {
 			throw new RuntimeException(e);
 		}
 	}
+	public List<String> getDatas(int idAluno){
+		List<String> datas = new ArrayList<String>();
+		
+		try {
+			PreparedStatement ps = this.conexao.prepareStatement("SELECT dataReg FROM histPeso WHERE idAluno=?");
+			
+			ps.setInt(1, idAluno);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				
+				datas.add(rs.getString("dataReg"));
+			}
+			
+			ps.close();
+			
+			return datas;
+			
+					
+		}catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 	
+	public HistPeso getByData(String data, int idAluno) {
+		try {
+			PreparedStatement ps = this.conexao.prepareStatement("SELECT * FROM histPeso WHERE dataReg=?, idAluno=?");
+			ps.setString(1, data);
+			ps.setInt(2, idAluno);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			HistPeso histPeso = new HistPeso();
+			
+			while (rs.next()) {
+				histPeso.setData(rs.getString("dataReg"));
+				histPeso.setIdAluno(rs.getInt("idAluno"));
+			}
+			
+			ps.close();
+			
+			return histPeso;
+			
+					
+		}catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 	
 	public void insert(HistPeso histPeso) {
 		try {
@@ -61,4 +110,29 @@ public class HistPesoDAO {
 		}
 	}
 	
+	public void update(HistPeso histPeso) {
+		try {
+			PreparedStatement ps = this.conexao.prepareStatement("UPDATE alunos SET dataReg=?, peso=? WHERE id=?");
+			
+			ps.setString(1, histPeso.getData());
+			ps.setDouble(2, histPeso.getPeso());
+			
+			ps.executeUpdate();
+			ps.close();
+			
+		}catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	public void delete(HistPeso histPeso) {
+		try {
+			PreparedStatement ps = this.conexao.prepareStatement("DELETE FROM histPeso WHERE id=?");
+			
+			ps.setInt(1, histPeso.getId());
+			
+			ps.execute();
+		}catch (SQLException e) {
+		throw new RuntimeException(e);
+		}
+	}
 }
