@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemListener;
+import java.text.ParseException;
 import java.awt.event.ItemEvent;
 import java.awt.Color;
 
@@ -57,7 +58,7 @@ public class Consulta extends JFrame {
 		contentPane.setBorder(new EmptyBorder(55, 35, 50, 35));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new GridLayout(7, 1, 2, 2));
+		contentPane.setLayout(new GridLayout(8, 1, 2, 2));
 		
 		JLabel lblNewLabel = new JLabel("Consulta de alunos");
 		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
@@ -88,6 +89,26 @@ public class Consulta extends JFrame {
 			}
 		});
 		contentPane.add(registrarBtn);
+		
+		JButton btnNewButton_1 = new JButton("Alterar Dados");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					AlterarDados alt = new AlterarDados();
+					AlunoDAO dao = new AlunoDAO(ConnectionFactory.getConnection());
+					Aluno aluno = dao.getByNome(nomeAlunos.getSelectedItem().toString());
+					alt.setAluno(aluno);
+					
+					alt.setVisible(true);
+					setVisible(false);
+					
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		contentPane.add(btnNewButton_1);
 		
 		JButton btnNewButton = new JButton("Gerar relatório");
 		contentPane.add(btnNewButton);

@@ -141,6 +141,25 @@ public class AlunoDAO {
 		}catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+		
+	}
+	public void update(Aluno aluno) {
+		try {
+			PreparedStatement ps = this.conexao.prepareStatement("UPDATE alunos SET nome=?, cpf=?, dataNasc=?, altura=? WHERE id=?");
+			
+			ps.setString(1, aluno.getNome());
+			ps.setString(2, aluno.getCpf());
+			ps.setString(3, aluno.getDataNasc());
+			ps.setDouble(4, aluno.getAltura());
+			ps.setInt(5, aluno.getId());
+			ps.executeUpdate();
+			
+			int rowsUpdated = ps.executeUpdate();
+			ps.close();
+					
+		}catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 }
