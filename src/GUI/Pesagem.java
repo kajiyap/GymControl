@@ -15,6 +15,8 @@ import java.awt.GridLayout;
 import java.util.List;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
@@ -49,10 +51,13 @@ public class Pesagem extends JFrame {
 		
 		// Preenche labels
 		nomeLabel.setText(aluno.getNome());
-      
-        HistPeso histPeso = dao.getByData(histData.getSelectedItem().toString(), aluno.getId());
-		pesoLabel.setText("Peso: " + String.valueOf(histPeso.getPeso()) + "kg");
-        imcLabel.setText("IMC: " + String.valueOf(histPeso.calcIMC(aluno.getAltura())));
+		
+		if(!datas.isEmpty()) {
+			// Preenche labels
+			HistPeso histPeso = dao.getByData(histData.getSelectedItem().toString(), aluno.getId());
+			pesoLabel.setText("Peso: " + String.valueOf(histPeso.getPeso()) + "kg");	
+			imcLabel.setText("IMC: " + String.valueOf(histPeso.calcIMC(aluno.getAltura())));
+		}
 		
 		
 		
@@ -136,8 +141,37 @@ public class Pesagem extends JFrame {
 		JButton btnNewButton = new JButton("Alterar");
 		panel_1.add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("Excluir");
-		panel_1.add(btnNewButton_1);
+		JButton excluirBtn = new JButton("Excluir");
+		excluirBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int confirm = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir esse registro?");
+				if(confirm == 0) {
+					try {
+						HistPesoDAO dao = new HistPesoDAO(ConnectionFactory.getConnection());
+						
+						HistPeso peso = dao.getByData(histData.getSelectedItem().toString(), aluno.getId());
+						dao.delete(peso.getId());
+						
+						// Refresh
+						
+						List<String> datas = dao.getDatas(aluno.getId());
+						histData.setModel(new DefaultComboBoxModel<Object>(datas.toArray()));
+						if(!datas.isEmpty()) {
+							// Preenche labels
+							HistPeso histPeso = dao.getByData(histData.getSelectedItem().toString(), aluno.getId());
+							pesoLabel.setText("Peso: " + String.valueOf(histPeso.getPeso()) + "kg");	
+							imcLabel.setText("IMC: " + String.valueOf(histPeso.calcIMC(aluno.getAltura())));
+						}
+						
+					}catch (RuntimeException error) {
+						JOptionPane.showMessageDialog(null, "Não foi possível excluir esse registro", "Erro", JOptionPane.ERROR_MESSAGE);
+						error.printStackTrace();
+					}
+				}
+			}
+		});
+		panel_1.add(excluirBtn);
 		
 		JButton voltarBtn = new JButton("Voltar");
 		voltarBtn.addActionListener(new ActionListener() {

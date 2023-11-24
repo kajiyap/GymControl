@@ -117,20 +117,22 @@ public class Consulta extends JFrame {
 		excluirBtn.addActionListener(new ActionListener() {
 			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent e) {
-				AlunoDAO dao = new AlunoDAO(ConnectionFactory.getConnection());
-				Aluno aluno = dao.getByNome(nomeAlunos.getSelectedItem().toString());
-				int confirm = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir esse usuário?");
+				
+				int confirm = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir esse aluno?");
 				
 				if(confirm == 0) {
 					try {
-						dao.delete(aluno);
+						AlunoDAO dao = new AlunoDAO(ConnectionFactory.getConnection());
+						Aluno aluno = dao.getByNome(nomeAlunos.getSelectedItem().toString());
+						dao.delete(aluno.getId());
 						
 						List<String> nomes = dao.getNomes();
 						
 						nomeAlunos.setModel(new DefaultComboBoxModel<Object>(nomes.toArray()));
 						
 					}catch(RuntimeException error) {
-						JOptionPane.showMessageDialog(null, "Algo deu errado", "Erro", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Não foi possível excluir esse aluno", "Erro", JOptionPane.ERROR_MESSAGE);
+						error.printStackTrace();
 					}
 				}
 			}

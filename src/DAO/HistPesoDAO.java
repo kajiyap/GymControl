@@ -129,11 +129,11 @@ public class HistPesoDAO {
 			throw new RuntimeException(e);
 		}
 	}
-	public void delete(HistPeso histPeso) {
+	public void delete(int id) {
 		try {
 			PreparedStatement ps = this.conexao.prepareStatement("DELETE FROM histPeso WHERE id=?");
 			
-			ps.setInt(1, histPeso.getId());
+			ps.setInt(1, id);
 			
 			ps.execute();
 		}catch (SQLException e) {
