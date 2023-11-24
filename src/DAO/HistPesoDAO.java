@@ -29,6 +29,9 @@ public class HistPesoDAO {
 			while (rs.next()) {
 				HistPeso peso = new HistPeso();
 				peso.setId(rs.getInt("id"));
+				peso.setPeso(rs.getDouble("peso"));
+				peso.setData(rs.getString("dataReg"));
+				peso.setIdAluno(rs.getInt("idAluno"));
 				
 				
 				pesos.add(peso);
@@ -70,7 +73,7 @@ public class HistPesoDAO {
 	
 	public HistPeso getByData(String data, int idAluno) {
 		try {
-			PreparedStatement ps = this.conexao.prepareStatement("SELECT * FROM histPeso WHERE dataReg=?, idAluno=?");
+			PreparedStatement ps = this.conexao.prepareStatement("SELECT * FROM histPeso WHERE dataReg=? AND idAluno=?");
 			ps.setString(1, data);
 			ps.setInt(2, idAluno);
 			
@@ -79,6 +82,8 @@ public class HistPesoDAO {
 			HistPeso histPeso = new HistPeso();
 			
 			while (rs.next()) {
+				histPeso.setId(rs.getInt("id"));
+				histPeso.setPeso(rs.getDouble("peso"));
 				histPeso.setData(rs.getString("dataReg"));
 				histPeso.setIdAluno(rs.getInt("idAluno"));
 			}

@@ -159,7 +159,7 @@ public class Consulta extends JFrame {
 				AlunoDAO dao = new AlunoDAO(ConnectionFactory.getConnection());
 				Aluno aluno = dao.getByNome(nomeAlunos.getSelectedItem().toString());
 				
-				pes.setIdAluno(aluno.getId());
+				pes.setAluno(aluno);
 			}
 		});
 		contentPane.add(btnNewButton_2);

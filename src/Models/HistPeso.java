@@ -48,7 +48,7 @@ public class HistPeso {
 		this.dataReg = data;
 	}
 	
-	public double calcIMC (double peso, double altura) {
-		return peso/altura*altura;
+	public double calcIMC (double altura) {
+		return this.peso/(altura*altura);
 	}
 }
