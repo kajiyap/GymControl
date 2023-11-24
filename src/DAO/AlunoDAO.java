@@ -162,4 +162,26 @@ public class AlunoDAO {
 		}
 	}
 	
+	public void delete(Aluno aluno) {
+		try {
+			// Delete histPeso do aluno
+			PreparedStatement ps = this.conexao.prepareStatement("DELETE FROM histPeso WHERE idAluno=?");
+			
+			ps.setInt(1, aluno.getId());
+			
+			ps.execute();
+			
+			// Delete aluno
+			ps = this.conexao.prepareStatement("DELETE FROM alunos WHERE id=?");
+			
+			ps.setInt(1, aluno.getId());
+			
+			ps.execute();
+			ps.close();
+					
+		}catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
 }

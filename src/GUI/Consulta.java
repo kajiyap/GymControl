@@ -13,9 +13,12 @@ import Models.Aluno;
 import java.awt.GridLayout;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -109,6 +112,30 @@ public class Consulta extends JFrame {
 			}
 		});
 		contentPane.add(btnNewButton_1);
+		
+		JButton excluirBtn = new JButton("Excluir aluno");
+		excluirBtn.addActionListener(new ActionListener() {
+			@SuppressWarnings("unchecked")
+			public void actionPerformed(ActionEvent e) {
+				AlunoDAO dao = new AlunoDAO(ConnectionFactory.getConnection());
+				Aluno aluno = dao.getByNome(nomeAlunos.getSelectedItem().toString());
+				int confirm = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir esse usuário?");
+				
+				if(confirm == 0) {
+					try {
+						dao.delete(aluno);
+						
+						List<String> nomes = dao.getNomes();
+						
+						nomeAlunos.setModel(new DefaultComboBoxModel<Object>(nomes.toArray()));
+						
+					}catch(RuntimeException error) {
+						JOptionPane.showMessageDialog(null, "Algo deu errado", "Erro", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+		});
+		contentPane.add(excluirBtn);
 		
 		JButton btnNewButton = new JButton("Gerar relatório");
 		contentPane.add(btnNewButton);
