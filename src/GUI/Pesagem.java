@@ -35,7 +35,6 @@ public class Pesagem extends JFrame {
 	private Aluno aluno;
 	private JComboBox histData;
 	private JLabel pesoLabel;
-	private JLabel imcLabel;
 	private JLabel nomeLabel;
 
 	public Aluno getAluno() {
@@ -58,7 +57,6 @@ public class Pesagem extends JFrame {
 			// Preenche labels
 			HistPeso histPeso = dao.getByData(histData.getSelectedItem().toString(), aluno.getId());
 			pesoLabel.setText("Peso: " + String.valueOf(histPeso.getPeso()) + "kg");	
-			imcLabel.setText("IMC: " + String.valueOf(histPeso.calcIMC(aluno.getAltura())));
 		}
 		
 		
@@ -115,7 +113,6 @@ public class Pesagem extends JFrame {
 		        
 		        // Preenche labels
 		        pesoLabel.setText("Peso: " + String.valueOf(histPeso.getPeso()) + "kg");
-		        imcLabel.setText("IMC: " + String.valueOf(histPeso.calcIMC(aluno.getAltura())));
 		        
 		    }
 		});
@@ -124,17 +121,12 @@ public class Pesagem extends JFrame {
 		JPanel pesoPanel = new JPanel();
 		pesoPanel.setBackground(Color.WHITE);
 		contentPane.add(pesoPanel);
-		pesoPanel.setLayout(new GridLayout(0, 2, 0, 0));
+		pesoPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		pesoLabel = new JLabel("Peso: kg");
 		pesoLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		pesoLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		pesoPanel.add(pesoLabel);
-		
-		imcLabel = new JLabel("IMC: ");
-		imcLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
-		imcLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		pesoPanel.add(imcLabel);
 		
 		JPanel buttonPanel = new JPanel();
 		contentPane.add(buttonPanel);
@@ -194,7 +186,6 @@ public class Pesagem extends JFrame {
 							// Preenche labels
 							HistPeso histPeso = dao.getByData(histData.getSelectedItem().toString(), aluno.getId());
 							pesoLabel.setText("Peso: " + String.valueOf(histPeso.getPeso()) + "kg");	
-							imcLabel.setText("IMC: " + String.valueOf(histPeso.calcIMC(aluno.getAltura())));
 						}
 						
 					}catch (RuntimeException error) {
