@@ -117,7 +117,6 @@ public class Consulta extends JFrame {
 						
 					}catch(RuntimeException error) {
 						JOptionPane.showMessageDialog(null, "Não foi possível excluir esse aluno", "Erro", JOptionPane.ERROR_MESSAGE);
-						error.printStackTrace();
 					}
 				}
 			}

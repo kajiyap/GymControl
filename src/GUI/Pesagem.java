@@ -24,6 +24,7 @@ import javax.swing.SwingConstants;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 
@@ -152,6 +153,25 @@ public class Pesagem extends JFrame {
 		buttonPanel.add(registroBtn);
 		
 		JButton alterarBtn = new JButton("Alterar");
+		alterarBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					AlterarPeso altPeso = new AlterarPeso();
+					
+					HistPesoDAO dao = new HistPesoDAO(ConnectionFactory.getConnection());
+					
+					HistPeso peso = dao.getByData(histData.getSelectedItem().toString(), aluno.getId());
+					
+					altPeso.setAluno(aluno);
+					altPeso.setHistPeso(peso);
+					altPeso.setVisible(true);
+					setVisible(false);
+				}catch(ParseException error) {
+					error.printStackTrace();
+				}
+				
+			}
+		});
 		buttonPanel.add(alterarBtn);
 		
 		JButton excluirBtn = new JButton("Excluir");

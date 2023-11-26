@@ -12,7 +12,7 @@ create table if not exists alunos(
 
 create table if not exists histPeso(
 	id INT PRIMARY KEY AUTO_INCREMENT,
-    dataReg VARCHAR(255),
+    dataReg VARCHAR(255) UNIQUE,
     peso DOUBLE,
     idAluno INT,
     FOREIGN KEY (idAluno) REFERENCES alunos(id)

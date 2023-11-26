@@ -117,10 +117,11 @@ public class HistPesoDAO {
 	
 	public void update(HistPeso histPeso) {
 		try {
-			PreparedStatement ps = this.conexao.prepareStatement("UPDATE alunos SET dataReg=?, peso=? WHERE id=?");
+			PreparedStatement ps = this.conexao.prepareStatement("UPDATE histPeso SET dataReg=?, peso=? WHERE id=?");
 			
 			ps.setString(1, histPeso.getData());
 			ps.setDouble(2, histPeso.getPeso());
+			ps.setInt(3, histPeso.getId());
 			
 			ps.executeUpdate();
 			ps.close();
