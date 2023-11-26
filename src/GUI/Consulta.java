@@ -146,9 +146,6 @@ public class Consulta extends JFrame {
 			}
 		});
 		
-		JButton btnNewButton = new JButton("Gerar relatório");
-		contentPane.add(btnNewButton);
-		
 		JLabel lblNewLabel_2 = new JLabel("");
 		contentPane.add(lblNewLabel_2);
 		contentPane.add(voltarBtn);

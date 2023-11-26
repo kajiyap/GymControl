@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileSystemView;
 
 import ConnectionFactory.ConnectionFactory;
 import DAO.AlunoDAO;
@@ -13,6 +14,7 @@ import Models.Aluno;
 import Models.HistPeso;
 
 import java.awt.GridLayout;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.JLabel;
@@ -20,11 +22,17 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.SwingConstants;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 
@@ -91,7 +99,7 @@ public class Pesagem extends JFrame {
 		contentPane.setBorder(new EmptyBorder(25, 25, 25, 25));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new GridLayout(7, 1, 0, 0));
+		contentPane.setLayout(new GridLayout(8, 1, 0, 0));
 		
 		JLabel lblNewLabel = new JLabel("Histórico de Peso");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -196,6 +204,79 @@ public class Pesagem extends JFrame {
 			}
 		});
 		buttonPanel.add(excluirBtn);
+		
+		JButton imcBtn = new JButton("Calcular IMC");
+		imcBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(!histData.getSelectedItem().toString().isBlank()) {
+					
+					HistPesoDAO dao = new HistPesoDAO(ConnectionFactory.getConnection());
+					HistPeso peso = dao.getByData(histData.getSelectedItem().toString(), aluno.getId());
+					
+					JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+
+					 int returnValue = jfc.showSaveDialog(null);
+
+					if (returnValue == JFileChooser.APPROVE_OPTION) {
+						File selectedFile = jfc.getSelectedFile();
+						
+						try {
+							String filePath = selectedFile.getAbsolutePath();
+							if(!filePath.endsWith(".txt")) {
+								filePath += ".txt";
+							}
+							
+							FileWriter fw = new FileWriter(filePath, true);
+						    BufferedWriter bw = new BufferedWriter(fw);
+						
+						    StringBuilder builder = new StringBuilder();
+						    
+						    String dataAtual = new SimpleDateFormat("[dd/MM/yyyy] - ").format(Calendar.getInstance().getTime());
+						    builder.append(dataAtual);
+						    
+						    builder.append(aluno.getCpf() + " - ");
+						    builder.append(aluno.getNome() + " - ");
+						    
+						    double imc = peso.calcIMC(aluno.getAltura());
+						    builder.append("IMC: "+ String.format("%,.2f - ", imc));
+						    
+						    String situacao = "";
+						    if(imc < 18.5) {
+						    	situacao = "Abaixo do peso";
+						    }else if(imc >= 18.5 && imc <= 24.9) {
+						    	situacao = "Peso adequado";
+						    }else if(imc >= 25 && imc <= 29.9) {
+						    	situacao = "Sobrepeso";
+						    }else if(imc >= 30 && imc <= 34.9) {
+						    	situacao = "Obesidade grau 1";
+						    }else if(imc >= 35 && imc < 39.9) {
+						    	situacao = "Obesidade grau 2";
+						    }else if(imc >= 40) {
+						    	situacao = "Obesidade extrema";
+						    }
+						    
+						    builder.append("Situação: " + situacao);
+						    
+						    
+						    bw.write(builder.toString());
+						    bw.newLine();
+						    bw.close();
+						    
+						    JOptionPane.showMessageDialog(null, "Cálculo registrado com sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+						    
+						} catch (IOException e1) {
+							JOptionPane.showMessageDialog(null, "Não foi possível registrar o cálculo", "Erro", JOptionPane.ERROR_MESSAGE);
+							e1.printStackTrace();
+						}
+						
+					}
+					
+				}else {
+					JOptionPane.showMessageDialog(null, "Nenhuma pesagem foi selecionada", "Erro", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		contentPane.add(imcBtn);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
 		contentPane.add(lblNewLabel_1);

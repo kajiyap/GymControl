@@ -30,7 +30,7 @@ public class AlterarPeso extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JFormattedTextField dataField;
+	private JLabel dataLabel;
 	private JTextField pesoField;
 	
 	private Aluno aluno; // Util apenas para o botao voltar
@@ -44,7 +44,7 @@ public class AlterarPeso extends JFrame {
 
 	public void setHistPeso(HistPeso histPeso) {
 		this.histPeso = histPeso;
-		this.dataField.setText(histPeso.getData());
+		this.dataLabel.setText(histPeso.getData());
 		this.pesoField.setText(String.valueOf(histPeso.getPeso()));
 	}
 
@@ -91,14 +91,10 @@ public class AlterarPeso extends JFrame {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblNewLabel);
 		
-		JLabel dataLabel = new JLabel("Data");
-		dataLabel.setFont(new Font("Arial", Font.BOLD, 16));
+		dataLabel = new JLabel("");
+		dataLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		dataLabel.setFont(new Font("Arial", Font.BOLD, 18));
 		contentPane.add(dataLabel);
-		
-		dataField = new JFormattedTextField(new MaskFormatter("##/##/####"));
-		dataField.setFont(new Font("Arial", Font.PLAIN, 12));
-		contentPane.add(dataField);
-		dataField.setColumns(10);
 		
 		JLabel pesoLabel = new JLabel("Peso");
 		pesoLabel.setFont(new Font("Arial", Font.BOLD, 16));
@@ -116,7 +112,7 @@ public class AlterarPeso extends JFrame {
 					System.out.println("apertou");
 					HistPesoDAO dao = new HistPesoDAO(ConnectionFactory.getConnection());
 					
-					histPeso.setData(dataField.getText());
+					histPeso.setData(dataLabel.getText());
 					histPeso.setPeso(Double.valueOf(pesoField.getText()));
 					
 					dao.update(histPeso);
@@ -124,12 +120,7 @@ public class AlterarPeso extends JFrame {
 					JOptionPane.showMessageDialog(null, "Pesagem alterada com sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 					
 				}catch (RuntimeException error) {
-					if(error.getMessage().contains("Duplicate entry")) {
-						JOptionPane.showMessageDialog(null, "Já existe uma pesagem nessa data para esse aluno", "Data inválida", JOptionPane.ERROR_MESSAGE);
-					}else {
-						JOptionPane.showMessageDialog(null, "Não foi possível alterar essa pesagem", "Erro", JOptionPane.ERROR_MESSAGE);
-					}
-					error.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Não foi possível alterar essa pesagem", "Erro", JOptionPane.ERROR_MESSAGE);
 				}
 				
 				
